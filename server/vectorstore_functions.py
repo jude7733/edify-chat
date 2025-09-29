@@ -1,4 +1,5 @@
 import os
+import re
 
 from langchain.text_splitter import (
     RecursiveCharacterTextSplitter,
@@ -26,6 +27,8 @@ def prepare_company_data():
     # 1. Company website
     web_loader = WebBaseLoader("https://www.edifydata.com/")
     web_docs = web_loader.load()
+    for doc in web_docs:
+        doc.page_content = re.sub(r"\s+", " ", doc.page_content).strip()
     documents.extend(web_docs)
 
     # 2. Company info text files
@@ -64,6 +67,23 @@ def create_vector_store(embeddings, store_name: str):
         print(f"--- Vector store {store_name} already exists ---")
 
 
+def create_retriver(embeddings, store_name: str):
+    persistent_directory = os.path.join(db_dir, store_name)
+
+    if not os.path.exists(persistent_directory):
+        create_vector_store(embeddings, store_name)
+
+    db = Chroma(
+        persist_directory=persistent_directory,
+        embedding_function=embeddings,
+    )
+    retriever = db.as_retriever(
+        search_type="mmr",
+        search_kwargs={"k": 3, "score_threshold": 0.5},
+    )
+    return retriever
+
+
 def query_vector_store(store_name, query, embedding_function):
     print(f"--- searching: {query}. ---")
     persistent_directory = os.path.join(db_dir, store_name)
@@ -77,7 +97,7 @@ def query_vector_store(store_name, query, embedding_function):
         embedding_function=embedding_function,
     )
     retriever = db.as_retriever(
-        search_type="similarity_score_threshold",
+        search_type="mmr",
         search_kwargs={"k": 3, "score_threshold": 0.5},
     )
     relevant_docs = retriever.invoke(query)
@@ -95,5 +115,5 @@ def query_vector_store(store_name, query, embedding_function):
 if __name__ == "__main__":
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     query = "How to contact edify?"
-    store_name = "edifydata"
-    query_vector_store(store_name, query, embeddings)
+
+    query_vector_store("edifydata", query, embeddings)

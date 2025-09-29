@@ -1,0 +1,18 @@
+ALLOWED_TOPICS = [
+    "edify",
+    "company",
+    "services",
+    "data science",
+    "machine learning",
+    "clinical research",
+    "cdisc",
+    "team",
+    "careers",
+    "artificial intelligence",
+    "big data",
+    "software development",
+    "technologies",
+    "clients",
+    "projects",
+    "experience",
+]

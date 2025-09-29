@@ -5,6 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "bs4>=0.0.2",
+    "dotenv>=0.9.9",
+    "langchain-chroma>=0.2.6",
     "langchain-community>=0.3.30",
+    "langchain-google-genai>=2.1.12",
     "langgraph>=0.6.7",
+    "pypdf>=6.1.1",
 ]

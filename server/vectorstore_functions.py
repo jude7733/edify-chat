@@ -1,5 +1,4 @@
 import os
-import re
 
 from langchain.text_splitter import (
     RecursiveCharacterTextSplitter,
@@ -25,10 +24,13 @@ def prepare_company_data():
         )
 
     # 1. Company website
-    web_loader = WebBaseLoader("https://www.edifydata.com/")
+    web_loader = WebBaseLoader(
+        web_path=[
+            "https://www.edifydata.com/",
+            "https://technopark.in/company-details/6347?company=EDIFY%20DATASCIENCE%20(P)%20Ltd",
+        ]
+    )
     web_docs = web_loader.load()
-    for doc in web_docs:
-        doc.page_content = re.sub(r"\s+", " ", doc.page_content).strip()
     documents.extend(web_docs)
 
     # 2. Company info text files

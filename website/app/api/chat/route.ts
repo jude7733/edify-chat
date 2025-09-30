@@ -12,7 +12,8 @@ interface ChatResponse {
   error?: string;
 }
 
-const FASTAPI_BASE_URL = process.env.FASTAPI_BASE_URL || 'http://127.0.0.1:8000';
+const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL
+// const FASTAPI_API_KEY = 'http://127.0.0.1:8000';
 
 export async function POST(request: NextRequest) {
   try {

@@ -11,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,3 +34,8 @@ async def chat_stream_endpoint(request: ChatRequest):
     result = graph_response["messages"][-1].content
 
     return StreamingResponse(result, media_type="text/plain")
+
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Chat API. Use the /chat endpoint to interact."}

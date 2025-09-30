@@ -1,5 +1,5 @@
-from typing import Annotated, Sequence, Literal, TypedDict
-from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
+from typing import Annotated, Literal, TypedDict
+from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph.message import add_messages
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import ToolNode
@@ -10,7 +10,7 @@ from custom_tools import tools
 
 
 class AgentState(TypedDict):
-    messages: Annotated[Sequence[BaseMessage], add_messages]
+    messages: Annotated[list, add_messages]
 
 
 def agent(state):

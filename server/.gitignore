@@ -201,7 +201,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-checkpoint.sqlite
+checkpoint.*
 
 # Chroma db
 db

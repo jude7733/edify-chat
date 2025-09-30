@@ -1,10 +1,13 @@
 from typing import Annotated, Literal, TypedDict
+from uuid import uuid4
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph.message import add_messages
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import ToolNode
 from langchain.chat_models import init_chat_model
 import pprint
+import sqlite3
+from langgraph.checkpoint.sqlite import SqliteSaver
 from utils import load_system_prompt
 from custom_tools import tools
 
@@ -53,17 +56,24 @@ workflow.add_conditional_edges(
 )
 workflow.add_edge("tools", "agent")
 
-graph = workflow.compile()
+sqlite_connection = sqlite3.connect("checkpoint.sqlite", check_same_thread=False)
+memory = SqliteSaver(sqlite_connection)
+
+graph = workflow.compile(checkpointer=memory)
 
 
 if __name__ == "__main__":
-    loop = True
-    while loop:
+    thread_id = str(uuid4())
+    print("starting chat at thread", thread_id)
+    config = {"configurable": {"thread_id": thread_id}}
+    while True:
         input_text = input("\nEnter your question (or type 'exit' to quit): ")
         if input_text.lower() == "exit":
             break
         events = graph.stream(
-            input={"messages": [HumanMessage(content=input_text)]}, stream_mode="values"
+            input={"messages": [HumanMessage(content=input_text)]},
+            stream_mode="updates",
+            config=config,
         )
         for event in events:
             pprint.pprint(event, indent=2)

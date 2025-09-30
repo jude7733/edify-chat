@@ -19,19 +19,15 @@ app.add_middleware(
 
 
 class ChatRequest(BaseModel):
-    input: str
+    user_input: str
     thread_id: str = str(uuid4())
 
 
-class ChatResponse(BaseModel):
-    response: str
-    thread_id: str
-
-
-@app.post("/chat/stream")
+@app.post("/chat")
 async def chat_stream_endpoint(request: ChatRequest):
     """Streaming chat endpoint"""
-    input_data = {"messages": [HumanMessage(content=request.input)]}
+    input_data = {"messages": [HumanMessage(content=request.user_input)]}
+    print("thread_id:", request.thread_id)
     config = {"configurable": {"thread_id": request.thread_id}}
 
     graph_response = graph.invoke(input_data, config=config)

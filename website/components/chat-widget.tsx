@@ -8,15 +8,23 @@ import { Input } from "./ui/input"
 type ChatRole = "user" | "assistant"
 type ChatMessage = { id: string; role: ChatRole; text: string }
 
+interface ChatResponse {
+  data: string;
+  thread_id: string;
+  status: 'success' | 'error';
+  error?: string;
+}
+
 export function ChatWidget() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [pending, setPending] = useState(false)
+  const [threadId, setThreadId] = useState<string>('')
   const inputRef = useRef<HTMLInputElement | null>(null)
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const placeholder = useMemo(
-    () => 'Need help choosing a service? Try: "Which service fits a SaaS analytics project?"',
+    () => 'Need help choosing a service? Try: "What services does Edify provide?"',
     [],
   )
 
@@ -25,6 +33,12 @@ export function ChatWidget() {
     const el = scrollRef.current
     if (el) el.scrollTop = el.scrollHeight
   }, [messages, open])
+
+  useEffect(() => {
+    if (!threadId) {
+      setThreadId(`thread_${crypto.randomUUID()}`)
+    }
+  }, [threadId])
 
   async function send(text: string) {
     const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -37,10 +51,8 @@ export function ChatWidget() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [
-            ...messages.map((m) => ({ role: m.role, content: m.text })),
-            { role: "user", content: text },
-          ],
+          user_input: text,
+          thread_id: threadId
         }),
       })
 
@@ -49,24 +61,40 @@ export function ChatWidget() {
         throw new Error(errBody?.error || `Request failed with ${res.status}`)
       }
 
-      const data = (await res.json()) as { reply?: string }
-      const reply = data?.reply?.trim()
+      const data = await res.json() as ChatResponse
+
+      if (data.status === 'error') {
+        throw new Error(data.error || 'Unknown error occurred')
+      }
+
+      const reply = data.data?.trim()
       setMessages((m) => [
         ...m,
-        { id: `${id}-assistant`, role: "assistant", text: reply || "Sorry, I couldn’t generate a reply." },
+        {
+          id: `${id}-assistant`,
+          role: "assistant",
+          text: reply || "Sorry, I couldn't generate a reply."
+        },
       ])
     } catch (e) {
+      console.error('Chat error:', e)
+      const errorMessage = e instanceof Error ? e.message : 'Unknown error occurred'
       setMessages((m) => [
         ...m,
         {
           id: `${id}-error`,
           role: "assistant",
-          text: "We ran into an issue talking to the assistant. Please try again.",
+          text: `Error: ${errorMessage}. Please try again.`,
         },
       ])
     } finally {
       setPending(false)
     }
+  }
+
+  const clearConversation = () => {
+    setMessages([])
+    setThreadId(`thread_${crypto.randomUUID()}`)
   }
 
   return (
@@ -89,21 +117,55 @@ export function ChatWidget() {
         aria-label="Edify support chat"
       >
         <div className="border-b bg-card px-4 py-3">
-          <div className="text-sm font-medium">Edify Assistant</div>
-          <div className="text-xs text-muted-foreground">Ask us anything about services or capabilities.</div>
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm font-medium">Edify Databot</div>
+              <div className="text-xs text-muted-foreground">
+                Ask us anything about services or capabilities.
+              </div>
+            </div>
+            {messages.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearConversation}
+                className="h-6 px-2 text-xs"
+              >
+                Clear
+              </Button>
+            )}
+          </div>
         </div>
 
-        <div ref={scrollRef} id="chat-scroll" className="h-72 space-y-3 overflow-y-auto px-4 py-4">
-          {messages.length === 0 && <div className="text-sm text-muted-foreground">{placeholder}</div>}
+        <div ref={scrollRef} id="chat-scroll" className="h-96 space-y-3 overflow-y-auto px-4 py-4">
+          {messages.length === 0 && (
+            <div className="space-y-2">
+              <div className="text-sm text-muted-foreground">{placeholder}</div>
+            </div>
+          )}
 
           {messages.map((m) => (
             <div key={m.id} className="text-sm">
-              <span className="mr-2 inline-block rounded border px-2 py-0.5 text-xs font-medium text-muted-foreground">
-                {m.role === "user" ? "You" : "Assistant"}
-              </span>
-              <span>{m.text}</span>
+              <div className="mb-1">
+                <span className={cn(
+                  "mr-2 inline-block rounded border px-2 py-0.5 text-xs font-medium",
+                  m.role === "user"
+                    ? "bg-primary/10 text-primary border-primary/20"
+                    : "bg-secondary text-secondary-foreground border-secondary"
+                )}>
+                  {m.role === "user" ? "You" : "Assistant"}
+                </span>
+              </div>
+              <div className="whitespace-pre-wrap break-words">{m.text}</div>
             </div>
           ))}
+
+          {pending && (
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+              <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-primary"></div>
+              <span>Assistant is typing...</span>
+            </div>
+          )}
         </div>
 
         <form
@@ -128,7 +190,6 @@ export function ChatWidget() {
           <Button
             type="submit"
             className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground disabled:opacity-60"
-            disabled={pending}
           >
             {pending ? "Sending..." : "Send"}
           </Button>

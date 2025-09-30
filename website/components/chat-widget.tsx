@@ -1,5 +1,6 @@
 "use client"
 
+import { TypingAnimation } from "@/components/ui/typing-animation"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "./ui/button"
@@ -153,17 +154,19 @@ export function ChatWidget() {
                     ? "bg-primary/10 text-primary border-primary/20"
                     : "bg-secondary text-secondary-foreground border-secondary"
                 )}>
-                  {m.role === "user" ? "You" : "Assistant"}
+                  {m.role === "user" ? "You" : "Databot"}
                 </span>
               </div>
-              <div className="whitespace-pre-wrap break-words">{m.text}</div>
+              <div className="whitespace-pre-wrap break-words">
+                <TypingAnimation duration={5} className="text-sm font-normal">{m.text}</TypingAnimation>
+              </div>
             </div>
           ))}
 
           {pending && (
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-primary"></div>
-              <span>Assistant is typing...</span>
+              <span>Databot is typing...</span>
             </div>
           )}
         </div>

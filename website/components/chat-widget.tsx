@@ -106,7 +106,7 @@ export function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         className="fixed bottom-4 right-4 z-50 rounded-full bg-primary px-4 py-3 text-sm font-medium text-primary-foreground shadow-lg transition hover:opacity-90"
       >
-        {open ? "Close Chat" : "Chat with us"}
+        {open ? "Close Chat" : "Chat with Databot"}
       </Button>
 
       <div

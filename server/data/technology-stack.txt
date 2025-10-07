@@ -1,0 +1,73 @@
+Edify Data Science - Technology Stack & Infrastructure
+Core Technologies & Frameworks
+Programming Languages
+
+    Python: Primary language for data science, machine learning, and backend development
+
+    R: Statistical computing, biostatistics, and clinical data analysis
+
+    SQL: Database management, data warehousing, analytics queries
+
+Machine Learning & AI Frameworks
+
+    TensorFlow: Deep learning, neural networks, production ML models
+
+    PyTorch: Research-grade ML models, computer vision, NLP
+
+    scikit-learn: Classical machine learning algorithms, data preprocessing
+
+Big Data & Distributed Computing
+
+    Apache Spark: Large-scale data processing, distributed computing
+
+    Apache Kafka: Real-time data streaming, event-driven architecture
+
+    Apache Airflow: Workflow orchestration, data pipeline automation
+
+Cloud Platforms & Services
+
+    Amazon Web Services: Elastic Compute Cloud, SageMaker, Lambda
+
+    Microsoft Azure: Machine learning, collaborative analytics, cognitive services
+
+    Google Cloud Platform: Vertex AI, BigQuery, Dataflow
+
+Databases & Data Storage
+
+    PostgreSQL: Relational database, ACID compliance
+
+    MongoDB: Document database, flexible schema, JSON storage
+
+    Redis: In-memory caching, session storage, real-time applications
+
+DevOps & Infrastructure
+
+    Docker: Containerization and application packaging
+
+    Kubernetes: Container orchestration
+
+    Jenkins: CI/CD automation
+
+Data Visualization & BI Tools
+
+    Tableau: Data visualization, interactive dashboards
+
+    Power BI: Business intelligence and analytics
+
+    Grafana: Real-time dashboards, time-series visualization
+
+Clinical Research & Regulatory Tools
+
+    SAS Clinical: Clinical trial data management, regulatory submissions
+
+    Define.xml: Metadata standards for regulatory compliance
+
+    Pinnacle 21: Data validation, CDISC compliance checking
+
+Security & Compliance
+
+    HashiCorp Vault: Secrets management
+
+    OAuth: Authorization framework
+
+    TLS/SSL: Data encryption

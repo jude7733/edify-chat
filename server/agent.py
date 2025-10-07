@@ -29,7 +29,7 @@ def agent(state):
     ):
         messages.insert(0, SystemMessage(content=system_prompt))
 
-    llm = init_chat_model("gemini-2.5-flash", model_provider="google_genai")
+    llm = init_chat_model("openai/gpt-oss-20b", model_provider="groq")
     model = llm.bind_tools(tools)
     response = model.invoke(messages)
     return {"messages": [response]}

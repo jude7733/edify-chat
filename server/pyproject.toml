@@ -12,6 +12,7 @@ dependencies = [
   "langchain-chroma>=0.2.6",
   "langchain-community>=0.3.30",
   "langchain-google-genai>=2.1.12",
+  "langchain-groq>=0.3.8",
   "langgraph>=0.6.7",
   "langgraph-checkpoint-sqlite>=2.0.11",
   "pillow>=11.3.0",

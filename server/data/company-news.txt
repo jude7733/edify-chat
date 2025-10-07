@@ -1,0 +1,65 @@
+Edify Data Science - Company News & Press Releases
+
+Recent Company Updates (2024-2025)
+
+October 2025
+
+    Edify formed a strategic partnership with IIT Madras Research Park to create an AI research lab focused on healthcare analytics and drug discovery. The collaboration involves a ₹5 crore investment over 3 years and includes 10 PhD scholars.
+
+    Edify won a ₹15 crore AI transformation contract from Tata Steel to deploy AI solutions like predictive maintenance and supply chain analytics in two steel plants, using over 500 IoT sensors, targeting ₹50 crore annual savings.
+
+September 2025
+
+    Edify received ISO 27001 certification for information security, assuring strong data protection and compliance with global standards.
+
+    Launched EdgeAI platform for real-time industrial analytics with low latency and support for 20+ industrial protocols, aiming for 15% market share in India by 2027.
+
+August 2025
+
+    Opened first North American office in Toronto to serve pharmaceutical and healthcare clients with a specialized team, targeting $5 million revenue in 2026.
+
+    Named "AI Company of the Year" by Kerala IT Mission for innovation, talent development, and client impact.
+
+July 2025
+
+    Completed Series A funding of ₹25 crores to expand operations, hire talent, and invest in R&D, led by Kalaari Capital and Blume Ventures.
+
+    Partnered with Google Cloud in their AI/ML Acceleration Program, gaining access to cloud credits, technical support, and early AI tools.
+
+June 2025
+
+    Launched ‘AI for Good’ initiative providing ₹50 lakhs annually in pro bono AI and data science services to NGOs in healthcare, education, and environment sectors.
+
+May 2025
+
+    Edify’s clinical AI system received FDA Breakthrough Device designation for early sepsis detection with 95% accuracy, backed by trials at major Indian hospitals.
+
+Industry Recognition & Awards (2024-2025)
+
+    AI Company of the Year - Kerala IT Mission
+
+    Best Healthcare Analytics Solution - Indian Healthcare Analytics Summit
+
+    Innovation in Clinical Research - Indian Pharmaceutical Congress
+
+    Excellence in Manufacturing AI - CII Industry 4.0 Awards
+
+    Top 10 Data Science Companies - Analytics India Magazine
+
+    Startup of the Year - Kerala Startup Mission
+
+Speaking Engagements & Conferences
+
+    World AI Conference 2025 (Shanghai), NeurIPS 2024 (Vancouver), HIMSS 2025 (Chicago), Strata Data Conference (New York), Indian Analytics Congress (Mumbai)
+
+Media Features
+
+    Economic Times, Business Standard, Forbes India, The Hindu, Dataquest
+
+Upcoming Events & Milestones
+
+    Nov-Dec 2025: Launch AutoML platform, open Bangalore center, publish AI drug discovery whitepaper
+
+    Early 2026: Grow team to 75+, start Edify Academy, target ₹100 crore revenue
+
+    2026-2028: Expand to Europe, prepare IPO, grow to 200+ employees

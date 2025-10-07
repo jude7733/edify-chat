@@ -1,10 +1,12 @@
 "use client"
 
-import { TypingAnimation } from "@/components/ui/typing-animation"
 import { useEffect, useMemo, useRef, useState } from "react"
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { cn } from "@/lib/utils"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
+import "./chat-widget.css"
 
 type ChatRole = "user" | "assistant"
 type ChatMessage = { id: string; role: ChatRole; text: string }
@@ -111,7 +113,7 @@ export function ChatWidget() {
 
       <div
         className={cn(
-          "fixed bottom-20 right-4 z-50 w-[92vw] max-w-sm overflow-hidden rounded-xl border bg-background shadow-2xl transition-all",
+          "fixed bottom-20 right-4 z-50 w-[92vw] max-w-xl overflow-hidden rounded-xl border bg-background shadow-2xl transition-all",
           open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
         )}
         role="dialog"
@@ -158,7 +160,9 @@ export function ChatWidget() {
                 </span>
               </div>
               <div className="whitespace-pre-wrap break-words">
-                <TypingAnimation duration={5} className="text-sm font-normal">{m.text}</TypingAnimation>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {m.text}
+                </ReactMarkdown>
               </div>
             </div>
           ))}
